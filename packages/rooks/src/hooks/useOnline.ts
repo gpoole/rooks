@@ -13,6 +13,10 @@ function getSnapshot(): boolean | null {
   return navigator.onLine;
 }
 
+function getServerSnapshot(): null {
+  return null;
+}
+
 function subscribe(onStoreChange: () => void): () => void {
   if (typeof window !== "undefined") {
     window.addEventListener("online", onStoreChange);
@@ -36,7 +40,7 @@ function subscribe(onStoreChange: () => void): () => void {
  * @see https://rooks.vercel.app/docs/useOnline
  */
 function useOnline(): boolean | null {
-  const isOnline = useSyncExternalStore<boolean | null>(subscribe, getSnapshot);
+  const isOnline = useSyncExternalStore<boolean | null>(subscribe, getSnapshot, getServerSnapshot);
 
   return isOnline;
 }
